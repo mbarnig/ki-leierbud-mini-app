@@ -1,0 +1,145 @@
+{
+  "title": "Visionaries_Start_EN",
+  "author": 5,
+  "parent_category": {
+    "id": 23,
+    "count": 0,
+    "description": "",
+    "link": "https://admin.ki-leierbud.lu/archives/category/knowledge",
+    "name": "Knowledge",
+    "slug": "knowledge",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://admin.ki-leierbud.lu/wp-json/wp/v2/categories/23",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://admin.ki-leierbud.lu/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://admin.ki-leierbud.lu/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://admin.ki-leierbud.lu/wp-json/wp/v2/posts?categories=23"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  "categories": [
+    505
+  ],
+  "tags": [
+    528
+  ],
+  "translations": [
+    {
+      "lang": "en",
+      "post_id": 1988
+    },
+    {
+      "lang": "fr",
+      "post_id": 2051
+    },
+    {
+      "lang": "de",
+      "post_id": 2055
+    },
+    {
+      "lang": "pt",
+      "post_id": 2060
+    },
+    {
+      "lang": "lb",
+      "post_id": 2066
+    }
+  ],
+  "sequence": {
+    "order": [
+      "en",
+      "fr",
+      "de",
+      "pt",
+      "lb"
+    ],
+    "posts": [
+      {
+        "en": 1988,
+        "fr": 2051,
+        "de": 2055,
+        "pt": 2060,
+        "lb": 2066
+      },
+      {
+        "en": 1974,
+        "fr": 1501,
+        "de": 0,
+        "pt": 0,
+        "lb": 0
+      },
+      {
+        "en": 1961,
+        "fr": 2077,
+        "de": 2080,
+        "pt": 0,
+        "lb": 2082
+      },
+      {
+        "en": 1965,
+        "fr": 2085,
+        "de": 2087,
+        "pt": 0,
+        "lb": 0
+      },
+      {
+        "en": 1977,
+        "fr": 2089,
+        "de": 0,
+        "pt": 0,
+        "lb": 0
+      },
+      {
+        "en": 1990,
+        "fr": 0,
+        "de": 0,
+        "pt": 0,
+        "lb": 0
+      }
+    ]
+  },
+  "color": {
+    "header": "#1F1F1F",
+    "main": "#2E2E2E",
+    "footer": "#1A1A1A"
+  },
+  "login": "https://www.web3.lu/ki-leierbud/login.html",
+  "about": "https://www.web3.lu/ki-leierbud/about.html",
+  "welcome": "https://www.web3.lu/ki-leierbud/welcome.html",
+  "search": "https://www.web3.lu/ki-leierbud/search.html",
+  "landing": "https://www.web3.lu/ki-leierbud/landing.html",
+  "dashboard": "https://www.web3.lu/ki-leierbud/dashboard.html",
+  "faq": "https://www.web3.lu/ki-leierbud/faq.html",
+  "user": "https://www.web3.lu/ki-leierbud/user.html",
+  "author" : "https://www.web3.lu/ki-leierbud/author.html",
+  "favicon": "/assets/favicon.ico"
+}

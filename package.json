@@ -1,0 +1,25 @@
+{
+  "name": "visionaries-static",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "rm -rf dist out && next build && mv out dist",
+    "start": "npx serve dist"
+  },
+  "dependencies": {
+    "next": "^15.5.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  }
+}
+
+

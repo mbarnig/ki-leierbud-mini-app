@@ -1,11 +1,11 @@
 {
-  "name": "visionaries-static",
-  "version": "0.1.0",
+  "name": "qubit-app",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "rm -rf dist out && next build && mv out dist",
-    "start": "npx serve dist"
+    "build": "rm -rf out && next build",
+    "start": "npx serve out"
   },
   "dependencies": {
     "next": "^15.5.2",

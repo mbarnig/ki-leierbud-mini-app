@@ -1,0 +1,69 @@
+{
+  "sequence": {
+    "posts": [
+      {
+        "en": 12,
+        "fr": 71,
+        "de": 73,
+        "pt": 114,
+        "lb": 76
+      },
+      {
+        "en": 14,
+        "fr": 451,
+        "de": 471,
+        "pt": 0,
+        "lb": 473
+      },
+      {
+        "en": 18,
+        "fr": 456,
+        "de": 0,
+        "pt": 0,
+        "lb": 0
+      },
+      {
+        "en": 16,
+        "fr": 454,
+        "de": 477,
+        "pt": 0,
+        "lb": 0
+      },
+      {
+        "en": 479,
+        "fr": 0,
+        "de": 0,
+        "pt": 0,
+        "lb": 0
+      },
+      {
+        "en": 3059,
+        "fr": 0,
+        "de": 0,
+        "pt": 0,
+        "lb": 0
+      }
+    ]
+  },
+  "color": {
+    "header": "#003366",
+    "main": "#E6F2FF",
+    "footer": "#004080",
+    "header-font": "#FFFFFF",
+    "main-font": "#000000",
+    "footer-font": "#FFFFFF"
+  },
+  "login": "https://www.web3.lu/ki-leierbud/login.html",
+  "about": "https://www.web3.lu/ki-leierbud/about.html",
+  "welcome": "https://www.web3.lu/ki-leierbud/welcome.html",
+  "search": "https://www.web3.lu/ki-leierbud/search.html",
+  "landing": "https://www.web3.lu/ki-leierbud/landing.html",
+  "dashboard": "https://www.web3.lu/ki-leierbud/dashboard.html",
+  "faq": "https://www.web3.lu/ki-leierbud/faq.html",
+  "user": "https://www.web3.lu/ki-leierbud/user.html",
+  "author": "https://www.web3.lu/ki-leierbud/author.html",
+  "favicon": "assets/logo.svg",
+  "logo": "assets/logo.svg",
+  "category_id": 574,
+  "category_name": "Introduction"
+}

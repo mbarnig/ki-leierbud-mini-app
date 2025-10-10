@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import Modal from '@/components/Modal';
 import TabsInit from '@/components/TabsInit';
-import { withBase, BP } from '@/lib/config'; // BP = basePath (ex: "/what")
+import { BP } from '@/lib/config'; 
 
 // --- Helper anti double-préfixe ---
 const isAbs = (u = '') => /^https?:\/\//i.test(u);
@@ -26,6 +26,7 @@ const goto = (selector) => {
   if (url) location.href = url; // utilise l'href déjà présent dans le DOM
 };
 
+
 export default function Layout({
   children,
   colors,
@@ -46,7 +47,10 @@ export default function Layout({
   }, []);
   const closeModal = useCallback(() => setModal((m) => ({ ...m, open: false })), []);
 
-  const wb = (p) => (p ? withBaseSafe(p) : p);
+     const wb = (p) => (p ? withBaseSafe(p) : p);
+     // ✅ Source du logo : prend celui passé en prop (déjà absolu ou relatif),
+     // sinon fallback sur /assets/logo.svg. wb() gère basePath + anti double-préfixe.
+     const logoSrc = wb(logo ?? '/assets/logo.svg');
 
   useEffect(() => {
     // ✅ Couleurs dynamiques (thème)
@@ -134,7 +138,6 @@ export default function Layout({
     e.preventDefault();
     openModal(links.dashboard, 'TOC');
   };
-
   return (
     <>
       {/* Header */}
@@ -142,7 +145,7 @@ export default function Layout({
         <div className="left">
           {/* Logo cliquable */}
           <a href={links?.about || '#'} onClick={onLogoClick} aria-label="About">
-            <img src={withBase('/assets/logo.svg')} alt="KI-Léierbud" className="logo" />
+            <img src={logoSrc} alt="KI-Léierbud" className="logo" />
           </a>
         </div>
 
@@ -196,13 +199,13 @@ export default function Layout({
             {authorInitials}
           </a>
 
-          {/* ✅ Bouton PREV avec basePath correct */}
+          {/* ✅ Bouton PREV */}
           <a
             className="nav prev"
             style={{ visibility: prevHref ? 'visible' : 'hidden' }}
             href={wb(prevHref) || '#'}
             aria-label="Previous"
-          >
+         >
             ⟵
           </a>
         </div>
@@ -218,7 +221,7 @@ export default function Layout({
         </div>
 
         <div className="side">
-          {/* ✅ Bouton NEXT avec basePath correct */}
+          {/* ✅ Bouton NEXT */}
           <a
             className="nav next"
             style={{ visibility: nextHref ? 'visible' : 'hidden' }}
@@ -243,4 +246,3 @@ export default function Layout({
     </>
   );
 }
-

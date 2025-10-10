@@ -3,8 +3,18 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { withBase } from '@/lib/config';
 import { loadConfig } from '@/lib/config-loader';
+import Layout from '@/components/Layout';
+
+const LOGO_BY_LANG = {
+  en: '/assets/logo-en.svg',
+  fr: '/assets/logo-fr.svg',
+  de: '/assets/logo-de.svg',
+  pt: '/assets/logo-pt.svg',
+  lb: '/assets/logo-lb.svg',
+};
 
 const ORDER = ['en', 'fr', 'de', 'pt', 'lb'];
+
 
 function bestForRow(row, preferredLc) {
   if (row[preferredLc]) return { lc: preferredLc, id: String(row[preferredLc]) };
@@ -94,9 +104,7 @@ export async function getStaticProps({ params }) {
   };
 
   // Assets internes (logo/favicon) → prefixer basePath si chemin commence par '/'
-  const logo = cfg.logo
-    ? (cfg.logo.startsWith('/') ? withBase(cfg.logo) : cfg.logo)
-    : withBase('/assets/logo.svg');
+  const logo = withBase('/assets/logo.svg');
 
   const favicon = cfg.favicon
     ? (cfg.favicon.startsWith('/') ? withBase(cfg.favicon) : cfg.favicon)
@@ -140,7 +148,6 @@ function ArticleContent({ html }) {
   return <article dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
-const Layout = dynamic(() => import('@/components/Layout'), { ssr: false });
 
 export default function PostPage(props) {
   const {

@@ -1,20 +1,22 @@
 // pages/[lang]/[slug].js
 import Head from 'next/head';
-import dynamic from 'next/dynamic';
-import { withBase } from '@/lib/config';
+import { BP } from '@/lib/config';
 import { loadConfig } from '@/lib/config-loader';
 import Layout from '@/components/Layout';
 
-const LOGO_BY_LANG = {
-  en: '/assets/logo-en.svg',
-  fr: '/assets/logo-fr.svg',
-  de: '/assets/logo-de.svg',
-  pt: '/assets/logo-pt.svg',
-  lb: '/assets/logo-lb.svg',
-};
+// --- Helper anti double-préfixe (même logique que Layout.jsx) ---
+const isAbs = (u = '') => /^https?:\/\//i.test(u);
+function withBaseSafe(path = '') {
+  if (!path) return path;
+  if (isAbs(path)) return path;
+  if (!BP) return path.startsWith('/') ? path : `/${path}`;
+  if (path === BP || path.startsWith(`${BP}/`)) return path;
+  const p = path.startsWith('/') ? path : `/${path}`;
+  return `${BP}${p}`.replace(/\/{2,}/g, '/');
+}
+const wb = (p) => (p ? withBaseSafe(p) : p);
 
 const ORDER = ['en', 'fr', 'de', 'pt', 'lb'];
-
 
 function bestForRow(row, preferredLc) {
   if (row[preferredLc]) return { lc: preferredLc, id: String(row[preferredLc]) };
@@ -54,7 +56,7 @@ export async function getStaticProps({ params }) {
   const actualLang = actual.lc;
   const idStr = actual.id;
 
-  // Récupération WordPress (titre + HTML)
+  // Fetch WordPress
   let title = '';
   let content = '';
   let authorInitials = 'AU';
@@ -80,7 +82,6 @@ export async function getStaticProps({ params }) {
     content = `<p><em>Content temporarily unavailable.</em></p>`;
   }
 
-  // Couleurs + couleurs de police depuis config-v4.json
   const colors = {
     header: cfg.color?.header || '#1F1F1F',
     main: cfg.color?.main || '#2E2E2E',
@@ -90,7 +91,6 @@ export async function getStaticProps({ params }) {
     footerFont: cfg.color?.['footer-font'] || '#FFFFFF',
   };
 
-  // Liens racine (ne PAS prefixer basePath sur URLs http(s) ; seulement assets internes)
   const links = {
     login: cfg.login,
     about: cfg.about,
@@ -103,14 +103,6 @@ export async function getStaticProps({ params }) {
     author: cfg.author,
   };
 
-  // Assets internes (logo/favicon) → prefixer basePath si chemin commence par '/'
-  const logo = withBase('/assets/logo.svg');
-
-  const favicon = cfg.favicon
-    ? (cfg.favicon.startsWith('/') ? withBase(cfg.favicon) : cfg.favicon)
-    : withBase('/assets/favicon.ico');
-
-  // Prev/Next + position (total constant)
   const total = cfg.sequence.posts.length;
   const pos = `${rowIndex + 1}/${total}`;
   const prevRow = rowIndex > 0 ? cfg.sequence.posts[rowIndex - 1] : null;
@@ -118,13 +110,11 @@ export async function getStaticProps({ params }) {
   const prevPick = prevRow ? bestForRow(prevRow, actualLang) : null;
   const nextPick = nextRow ? bestForRow(nextRow, actualLang) : null;
 
-  const prevHref = prevPick ? withBase(`/${prevPick.lc}/${prevPick.id}/`) : null;
-  const nextHref = nextPick ? withBase(`/${nextPick.lc}/${nextPick.id}/`) : null;
+  // ✅ prev/next HREFs absolus (préfixés basePath)
+  const prevHref = prevPick ? wb(`/${prevPick.lc}/${prevPick.id}/`) : null;
+  const nextHref = nextPick ? wb(`/${nextPick.lc}/${nextPick.id}/`) : null;
 
-  // Langues disponibles pour cette row
-  const langOptions = ORDER.filter(lc => !!currentRow[lc]).map(lc => ({
-    lc, id: String(currentRow[lc]),
-  }));
+  const langOptions = ORDER.filter(lc => !!currentRow[lc]).map(lc => ({ lc, id: String(currentRow[lc]) }));
 
   return {
     props: {
@@ -132,14 +122,13 @@ export async function getStaticProps({ params }) {
       content,
       colors,
       links,
-      logo,
-      favicon,
       lang: actualLang,
       langOptions,
       prevHref,
       nextHref,
       position: pos,
       authorInitials,
+      // ✅ Pas besoin de passer logo/favicon : Layout et <Head> gèrent les valeurs globales
     },
   };
 }
@@ -148,10 +137,9 @@ function ArticleContent({ html }) {
   return <article dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
-
 export default function PostPage(props) {
   const {
-    title, content, colors, links, logo, favicon,
+    title, content, colors, links,
     lang, langOptions, prevHref, nextHref, position, authorInitials,
   } = props;
 
@@ -160,30 +148,21 @@ export default function PostPage(props) {
       <Head>
         <title>{title || 'Article'}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        {favicon && <link rel="icon" href={favicon} />}
-        <style>{`
-          :root{
-            --color-header:${colors.header};
-            --color-main:${colors.main};
-            --color-footer:${colors.footer};
-            --text-header:${colors.headerFont};
-            --text-main:${colors.mainFont};
-            --text-footer:${colors.footerFont};
-          }
-        `}</style>
+        {/* ✅ favicon unique, absolu et préfixé */}
+        <link rel="icon" href={wb('/assets/favicon.ico')} />
       </Head>
 
       <div className="page-shell">
         <Layout
           colors={colors}
           links={links}
-          logo={logo}
           prevHref={prevHref}
           nextHref={nextHref}
           authorInitials={authorInitials}
           position={position}
           langOptions={langOptions}
           currentLang={lang}
+          // logo non passé → Layout utilisera /assets/logo.svg (fallback global)
         >
           <ArticleContent html={content} />
         </Layout>
@@ -191,4 +170,3 @@ export default function PostPage(props) {
     </>
   );
 }
-
